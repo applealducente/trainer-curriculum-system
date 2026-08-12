@@ -1,0 +1,13 @@
+{
+  "name": "trainer-curriculum-system",
+  "version": "1.0.0",
+  "description": "Trainer Curriculum Management System - August 2026",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "start": "python -m http.server 8000"
+  },
+  "keywords": ["trainer", "curriculum", "training"],
+  "author": "Your Name",
+  "license": "MIT"
+}
