@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
-        .container { background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 1000px; margin: 0 auto; overflow: hidden; }
+        .container { background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 1200px; width: 100%; margin: 0 auto; overflow: hidden; }
         .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; position: relative; }
         .header h1 { font-size: 28px; margin-bottom: 8px; }
         .logout-top { position: absolute; top: 20px; right: 30px; padding: 8px 16px; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 6px; cursor: pointer; font-size: 12px; }
@@ -108,11 +108,11 @@
         
         <!-- HOME -->
         <div id="homeScreen" class="home-screen">
-            <div class="portal-header">
-                <h2>🏠 Training Dashboard</h2>
-                <div style="display: flex; gap: 10px;">
-                    <button class="logout-top" onclick="switchToAdmin()" style="background: rgba(255,193,7,0.2); border-color: #ffc107; color: #ffc107;">🔐 Admin</button>
-                    <button class="logout-top" onclick="logout()">Logout</button>
+            <div style="padding: 20px 30px; border-bottom: 1px solid #eee; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;">
+                <h2 style="margin: 0; font-size: 20px; color: #333;">🏠 Training Dashboard</h2>
+                <div style="display: flex; gap: 10px; min-width: fit-content;">
+                    <button onclick="switchToAdmin()" style="padding: 8px 12px; background: rgba(255,193,7,0.2); border: 1px solid #ffc107; color: #ffc107; border-radius: 6px; cursor: pointer; font-size: 11px; white-space: nowrap;">🔐 Admin</button>
+                    <button onclick="logout()" style="padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 6px; cursor: pointer; font-size: 11px; white-space: nowrap;">Logout</button>
                 </div>
             </div>
             <div class="portal-content">
@@ -137,9 +137,9 @@
         
         <!-- ADMIN -->
         <div id="adminScreen" style="display: none;">
-            <div class="portal-header">
-                <h2>🔐 Admin Dashboard</h2>
-                <button class="logout-top" onclick="backToHome()">← Home</button>
+            <div style="padding: 20px 30px; border-bottom: 1px solid #eee; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;">
+                <h2 style="margin: 0; font-size: 20px; color: #333;">🔐 Admin Dashboard</h2>
+                <button onclick="backToHome()" style="padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 6px; cursor: pointer; font-size: 11px; white-space: nowrap;">← Home</button>
             </div>
             <div class="portal-content">
                 <div class="nav-tabs">
