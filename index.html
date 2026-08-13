@@ -244,10 +244,75 @@
         function displayCurrentActivity() {
             const dayData = curriculum[currentDay];
             const activities = dayData.activities;
-            const activity = activities[currentActivityIndex];
             
             document.getElementById('dayTitle').textContent = `Day ${currentDay} - ${dayData.title}`;
             
+            // Special handling for Day 9
+            if (currentDay === "9") {
+                document.getElementById('progressSection').innerHTML = '';
+                document.getElementById('activityContent').innerHTML = `
+                    <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 20px;">
+                        <h3 style="color: #856404; margin-bottom: 15px;">📚 ASYNC MATERIALS - Complete on Your Own Time</h3>
+                        <p style="font-size: 13px; color: #666; margin-bottom: 12px;">These must be reviewed before Day 10:</p>
+                        <div style="margin-left: 20px;">
+                            <p>✓ Pay Structure</p>
+                            <p>✓ PV (Protocol Violation)</p>
+                            <p>✓ ZTP (Zero Tolerance Policy)</p>
+                            <p>✓ Nesting Expectations</p>
+                            <p>✓ Nesting House Rules</p>
+                        </div>
+                    </div>
+                    <div class="activity-card">
+                        <div class="activity-title" style="margin-bottom: 15px;">Day 9 - Systems, Tools & Live-Call Readiness</div>
+                        ${activities.map((act, idx) => `
+                            <div style="padding: 12px; border-bottom: 1px solid #eee; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <div style="font-weight: 600; font-size: 13px;">${act.name}</div>
+                                    <div style="font-size: 11px; color: #667eea;">${act.time}</div>
+                                </div>
+                                <div style="font-size: 11px; color: #666;">${act.delivery}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                return;
+            }
+            
+            // Special handling for Day 10
+            if (currentDay === "10") {
+                document.getElementById('progressSection').innerHTML = '';
+                document.getElementById('activityContent').innerHTML = `
+                    <div style="background: #d1ecf1; padding: 20px; border-radius: 8px; border-left: 4px solid #17a2b8; margin-bottom: 20px;">
+                        <h3 style="color: #0c5460; margin-bottom: 15px;">✅ FORM VALIDATION & ASYNC MATERIALS CHECK (First 30 mins)</h3>
+                        <p style="margin-bottom: 15px; font-size: 13px; color: #0c5460;">Verify all requirements completed:</p>
+                        <div style="background: white; padding: 15px; border-radius: 6px;">
+                            <div style="margin-bottom: 10px;"><input type="checkbox"> All forms completed</div>
+                            <div style="margin-bottom: 10px;"><input type="checkbox"> Pay Structure reviewed</div>
+                            <div style="margin-bottom: 10px;"><input type="checkbox"> PV (Protocol Violation) reviewed</div>
+                            <div style="margin-bottom: 10px;"><input type="checkbox"> ZTP (Zero Tolerance Policy) reviewed</div>
+                            <div style="margin-bottom: 10px;"><input type="checkbox"> Nesting Expectations reviewed</div>
+                            <div style="margin-bottom: 10px;"><input type="checkbox"> Nesting House Rules reviewed</div>
+                        </div>
+                        <button class="btn" style="margin-top: 20px;" onclick="approveDay10()">✓ All Requirements Met - Ready to Dial!</button>
+                    </div>
+                    <div style="background: #f0f4ff; padding: 20px; border-radius: 8px;">
+                        <h4 style="color: #667eea; margin-bottom: 15px;">Day 10 - Live Call Launch</h4>
+                        ${activities.map((act, idx) => `
+                            <div style="padding: 12px; border-bottom: 1px solid #eee; margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                    <div style="font-weight: 600; font-size: 13px;">${act.name}</div>
+                                    <div style="font-size: 11px; color: #667eea;">${act.time}</div>
+                                </div>
+                                <div style="font-size: 11px; color: #666;">${act.delivery}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                return;
+            }
+            
+            // Normal days
+            const activity = activities[currentActivityIndex];
             const progress = ((currentActivityIndex + 1) / activities.length) * 100;
             document.getElementById('progressSection').innerHTML = `
                 <div class="progress-indicator">
@@ -268,6 +333,18 @@
                     <div class="activity-actions">
                         <button class="action-btn primary" onclick="completeActivity()">✓ Done</button>
                     </div>
+                </div>
+            `;
+        }
+        
+        function approveDay10() {
+            document.getElementById('activityContent').innerHTML = `
+                <div class="congratulations">
+                    <div style="font-size: 80px; margin-bottom: 20px;" class="bounce">🚀</div>
+                    <h2>GOODLUCK!</h2>
+                    <h2 style="font-size: 36px; margin-bottom: 30px;">CLOSE A LOT OF SALES!</h2>
+                    <p style="font-size: 18px;">Time to make those calls! 📞</p>
+                    <button class="btn" style="max-width: 300px; margin: 30px auto 0;" onclick="backToHome()">→ Complete</button>
                 </div>
             `;
         }
