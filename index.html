@@ -8,29 +8,32 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
         .container { background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 1200px; width: 100%; margin: 0 auto; overflow: hidden; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; position: relative; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
         .header h1 { font-size: 28px; margin-bottom: 8px; }
-        .logout-top { position: absolute; top: 20px; right: 30px; padding: 8px 16px; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 6px; cursor: pointer; font-size: 12px; }
         
         .login-screen { }
         .home-screen { display: none; }
         .home-screen.active { display: block; }
         .activity-screen { display: none; }
         .activity-screen.active { display: block; }
-        
-        .portal-header { padding: 20px 30px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
-        .portal-header h2 { font-size: 20px; color: #333; }
-        .portal-content { padding: 30px; }
+        .admin-screen { display: none; }
+        .admin-screen.active { display: block; }
         
         .auth-section { padding: 40px; max-width: 450px; margin: 40px auto; text-align: center; }
         .auth-section h2 { margin-bottom: 30px; color: #333; font-size: 24px; }
         .form-group { margin-bottom: 15px; text-align: left; }
         .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: 500; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
         .btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
         
+        .portal-header { padding: 20px 30px; border-bottom: 1px solid #eee; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; }
+        .portal-header h2 { margin: 0; font-size: 20px; color: #333; }
+        .header-btn { padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 6px; cursor: pointer; font-size: 11px; white-space: nowrap; }
+        .header-btn.admin { background: rgba(255,193,7,0.2); border-color: #ffc107; color: #ffc107; }
+        
+        .portal-content { padding: 30px; }
         .trainer-name { text-align: center; padding: 20px; background: #f0f4ff; border-radius: 8px; margin-bottom: 30px; }
-        .trainer-name h3 { color: #667eea; }
+        .trainer-name h3 { color: #667eea; font-size: 16px; }
         
         .nav-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee; }
         .nav-tab { padding: 12px 20px; background: none; border: none; cursor: pointer; font-weight: 600; color: #999; border-bottom: 3px solid transparent; }
@@ -45,22 +48,15 @@
         .day-tile h4 { font-size: 14px; margin-bottom: 6px; }
         .day-tile p { font-size: 11px; opacity: 0.9; }
         
-        .form-card { background: #f9f9f9; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea; margin-bottom: 12px; }
-        .form-card h4 { margin-bottom: 8px; color: #333; font-size: 13px; }
-        .form-card a { display: inline-block; padding: 6px 12px; background: #667eea; color: white; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: 600; }
-        
         .activity-card { background: white; border: 2px solid #667eea; border-radius: 10px; padding: 20px; margin-bottom: 15px; }
         .activity-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
         .activity-title { font-size: 16px; font-weight: 600; color: #333; }
         .activity-time { font-size: 12px; color: #667eea; }
-        .badges { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+        .badges { display: flex; gap: 8px; margin-bottom: 12px; }
         .badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #e0f2fe; color: #0369a1; }
-        .badge.break { background: #fef3c7; color: #92400e; }
-        .material-link { background: #f0f4ff; padding: 12px; border-radius: 6px; margin-bottom: 12px; font-size: 12px; }
         .activity-actions { display: flex; gap: 10px; }
         .action-btn { flex: 1; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; }
         .action-btn.primary { background: #10b981; color: white; }
-        .action-btn.secondary { background: #f0f0f0; color: #333; }
         
         .progress-indicator { text-align: center; padding: 15px; background: #f0f4ff; border-radius: 8px; margin-bottom: 15px; }
         .progress-bar { width: 100%; height: 6px; background: #ddd; border-radius: 3px; margin-bottom: 8px; }
@@ -69,22 +65,9 @@
         .congratulations { text-align: center; padding: 50px 20px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 10px; color: white; }
         .congratulations h2 { font-size: 32px; margin-bottom: 10px; }
         .congratulations p { font-size: 16px; margin-bottom: 30px; }
-        .cta-btn { max-width: 300px; margin: 10px auto; }
-        
-        .back-btn { padding: 10px 20px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; margin-bottom: 15px; font-size: 12px; }
-        
-        .async-materials { background: #fff3cd; padding: 15px; border-radius: 8px; border-left: 4px solid #ffc107; margin-bottom: 15px; }
-        .async-materials h4 { color: #856404; margin-bottom: 10px; }
-        .async-item { margin-bottom: 8px; }
-        .async-item input { margin-right: 8px; }
-        
-        .day10-approval { background: #d1ecf1; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-        .day10-approval h3 { color: #0c5460; margin-bottom: 15px; }
-        .approval-checklist { list-style: none; }
-        .approval-checklist li { padding: 10px; margin-bottom: 8px; background: white; border-radius: 6px; }
-        .approval-checklist input { margin-right: 10px; }
         
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .bounce { animation: bounce 1s infinite; }
     </style>
 </head>
 <body>
@@ -108,178 +91,122 @@
         
         <!-- HOME -->
         <div id="homeScreen" class="home-screen">
-            <div style="padding: 20px 30px; border-bottom: 1px solid #eee; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;">
-                <h2 style="margin: 0; font-size: 20px; color: #333;">🏠 Training Dashboard</h2>
-                <div style="display: flex; gap: 10px; min-width: fit-content;">
-                    <button onclick="switchToAdmin()" style="padding: 8px 12px; background: rgba(255,193,7,0.2); border: 1px solid #ffc107; color: #ffc107; border-radius: 6px; cursor: pointer; font-size: 11px; white-space: nowrap;">🔐 Admin</button>
-                    <button onclick="logout()" style="padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 6px; cursor: pointer; font-size: 11px; white-space: nowrap;">Logout</button>
+            <div class="portal-header">
+                <h2>🏠 Training Dashboard</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="header-btn admin" onclick="switchToAdmin()">🔐 Admin</button>
+                    <button class="header-btn" onclick="logout()">Logout</button>
                 </div>
             </div>
             <div class="portal-content">
                 <div class="trainer-name">
                     <h3>Welcome, <span id="displayName"></span>! 👋</h3>
                 </div>
-                
                 <div class="nav-tabs">
                     <button class="nav-tab active" onclick="switchTab('days')">📅 Days</button>
                     <button class="nav-tab" onclick="switchTab('forms')">📋 Forms</button>
                 </div>
-                
                 <div id="days-tab" class="tab-content active">
                     <div class="day-tiles" id="dayTiles"></div>
                 </div>
-                
                 <div id="forms-tab" class="tab-content">
-                    <div id="formsList"></div>
+                    <p style="color: #666; font-size: 14px;">Forms coming soon...</p>
                 </div>
             </div>
         </div>
         
-        <!-- ADMIN -->
-        <div id="adminScreen" style="display: none;">
-            <div style="padding: 20px 30px; border-bottom: 1px solid #eee; display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center;">
-                <h2 style="margin: 0; font-size: 20px; color: #333;">🔐 Admin Dashboard</h2>
-                <button onclick="backToHome()" style="padding: 8px 12px; background: rgba(255,255,255,0.2); border: 1px solid white; color: white; border-radius: 6px; cursor: pointer; font-size: 11px; white-space: nowrap;">← Home</button>
+        <!-- ACTIVITY -->
+        <div id="activityScreen" class="activity-screen">
+            <div class="portal-header">
+                <h2 id="dayTitle">Day 1</h2>
+                <button class="header-btn" onclick="backToHome()">← Home</button>
             </div>
             <div class="portal-content">
-                <div class="nav-tabs">
-                    <button class="nav-tab active" onclick="switchAdminTab('stats')">📊 Stats</button>
-                    <button class="nav-tab" onclick="switchAdminTab('settings')">⚙️ Settings</button>
-                </div>
-                <div id="stats-tab" class="tab-content active"><div id="adminStats"></div></div>
-                <div id="settings-tab" class="tab-content">
-                    <div class="settings-form">
-                        <h4>🔐 Change Admin Password</h4>
-                        <div class="form-group"><input type="password" id="newAdminPassword" placeholder="New password"></div>
-                        <button class="btn" onclick="saveAdminPassword()">Save</button>
-                    </div>
-                    <div class="settings-form">
-                        <h4>🎨 Material Links</h4>
-                        <div id="materialLinksForm"></div>
-                        <button class="btn" onclick="saveMaterialLinks()">Save</button>
-                    </div>
-                </div>
+                <div id="progressSection"></div>
+                <div id="activityContent"></div>
+            </div>
+        </div>
+        
+        <!-- ADMIN -->
+        <div id="adminScreen" class="admin-screen">
+            <div class="portal-header">
+                <h2>🔐 Admin Dashboard</h2>
+                <button class="header-btn" onclick="backToHome()">← Home</button>
+            </div>
+            <div class="portal-content">
+                <p style="color: #666; font-size: 14px;">Admin features coming soon...</p>
             </div>
         </div>
     </div>
 
     <script>
-        const DB_URL = "https://trainer-portal-2ef55-default-rtdb.firebaseio.com";
-        
         const curriculum = {
-            "1": { title: "Orientation, Setup & FC Foundation", sync: "Synchronous", activities: [
-                { time: "8:00–9:00", duration: "1 hr", name: "Roll Call / Initial Attendance", delivery: "Trainer-led", material: "Introduction Slides" },
-                { time: "9:00–10:30", duration: "1.5 hrs", name: "Introduction & House Rules", delivery: "Trainer-led", material: "House Rules Document" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–12:45", duration: "2 hrs", name: "Account Setup: Hubstaff, Slack & Gmail", delivery: "Guided setup", material: "Setup Guide" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:45–3:45", duration: "2 hrs", name: "Onboarding Forms", delivery: "Guided setup / forms", material: "Forms Document" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–5:00", duration: "1 hr", name: "FC 101", delivery: "Instructor-led module", material: "FC 101 Module" }
+            "1": { title: "Orientation, Setup & FC Foundation", activities: [
+                { time: "8:00–9:00", duration: "1 hr", name: "Roll Call", delivery: "Trainer-led" },
+                { time: "9:00–10:30", duration: "1.5 hrs", name: "Introduction & House Rules", delivery: "Trainer-led" },
+                { time: "10:45–12:45", duration: "2 hrs", name: "Account Setup", delivery: "Guided setup" },
+                { time: "1:45–3:45", duration: "2 hrs", name: "Onboarding Forms", delivery: "Guided setup" },
+                { time: "4:00–5:00", duration: "1 hr", name: "FC 101", delivery: "Instructor-led" }
             ]},
-            "2": { title: "Product Knowledge & Application", sync: "Synchronous", activities: [
-                { time: "8:00–9:00", duration: "1 hr", name: "Review Activity", delivery: "Trainer-led", material: "Review Quiz" },
-                { time: "9:00–10:00", duration: "1 hr", name: "FC Sales Process Playbook Part 1", delivery: "Instructor-led module", material: "Sales Playbook" },
-                { time: "10:00–10:15", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:15–12:45", duration: "2.5 hrs", name: "FC Sales Process Playbook Continuation", delivery: "Instructor-led module", material: "Sales Playbook" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:45–2:45", duration: "1 hr", name: "Staging Websites Discussion", delivery: "Demo / walkthrough", material: "Staging Guide" },
-                { time: "2:45–3:45", duration: "1 hr", name: "CRM Tool Staging Simulation", delivery: "Guided practice", material: "CRM Guide" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–5:00", duration: "1 hr", name: "Individual Staging Practice", delivery: "Hands-on practice", material: "" }
+            "2": { title: "Product Knowledge & Application", activities: [
+                { time: "8:00–9:00", duration: "1 hr", name: "Review Activity", delivery: "Trainer-led" },
+                { time: "9:00–10:00", duration: "1 hr", name: "FC Sales Playbook Part 1", delivery: "Instructor-led" },
+                { time: "1:45–2:45", duration: "1 hr", name: "Staging Discussion", delivery: "Demo" },
+                { time: "4:00–5:00", duration: "1 hr", name: "Individual Practice", delivery: "Hands-on" }
             ]},
-            "3": { title: "Trial / OTC + Call Flow Foundation", sync: "Synchronous", activities: [
-                { time: "8:00–8:30", duration: "30 min", name: "Review", delivery: "Trainer-led", material: "Review Notes" },
-                { time: "8:30–10:30", duration: "2 hrs", name: "Trial & One-Time Playbook", delivery: "Instructor-led module", material: "Trial Playbook" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–12:15", duration: "1.5 hrs", name: "Call Flow Familiarization", delivery: "Instructor-led / walkthrough", material: "Call Flow Guide" },
-                { time: "12:15–1:15", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:15–1:45", duration: "30 min", name: "FC 101 Quiz", delivery: "Assessment", material: "Quiz" },
-                { time: "1:45–3:45", duration: "2 hrs", name: "Full Journey Walkthrough", delivery: "Guided walkthrough", material: "Journey Map" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–5:00", duration: "1 hr", name: "YES Customer AI Practice", delivery: "AI simulation", material: "AI Practice" }
+            "3": { title: "Trial / OTC + Call Flow", activities: [
+                { time: "8:00–8:30", duration: "30 min", name: "Review", delivery: "Trainer-led" },
+                { time: "8:30–10:30", duration: "2 hrs", name: "Trial & OTC Playbook", delivery: "Instructor-led" },
+                { time: "1:45–3:45", duration: "2 hrs", name: "Full Journey", delivery: "Walkthrough" },
+                { time: "4:00–5:00", duration: "1 hr", name: "YES Customer AI", delivery: "AI simulation" }
             ]},
-            "4": { title: "YES Customer AI + Coaching", sync: "Synchronous", activities: [
-                { time: "8:00–8:30", duration: "30 min", name: "YES Customer Briefing", delivery: "Trainer-led", material: "Briefing Notes" },
-                { time: "8:30–10:30", duration: "2 hrs", name: "Product Knowledge Test", delivery: "Assessment", material: "Test" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–12:45", duration: "2 hrs", name: "YES Customer AI Simulation", delivery: "AI simulation", material: "Simulation" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch / Trainer Results Processing", delivery: "Trainer processing", material: "" },
-                { time: "1:45–3:45", duration: "2 hrs", name: "Targeted Coaching / Remediation", delivery: "Trainer coaching", material: "Coaching Notes" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–5:00", duration: "1 hr", name: "Results & Development Direction", delivery: "Trainer-led / individual", material: "" }
+            "4": { title: "YES Customer AI + Coaching", activities: [
+                { time: "8:00–8:30", duration: "30 min", name: "YES Briefing", delivery: "Trainer-led" },
+                { time: "8:30–10:30", duration: "2 hrs", name: "Product Test", delivery: "Assessment" },
+                { time: "10:45–12:45", duration: "2 hrs", name: "YES AI Simulation", delivery: "AI simulation" },
+                { time: "1:45–3:45", duration: "2 hrs", name: "Targeted Coaching", delivery: "Trainer coaching" }
             ]},
-            "5": { title: "Sales Discovery + AI Application", sync: "Synchronous", activities: [
-                { time: "8:00–9:00", duration: "1 hr", name: "Trial & OTC Quiz", delivery: "Assessment", material: "Quiz" },
-                { time: "9:00–10:00", duration: "1 hr", name: "Call Listening & Analysis", delivery: "Facilitated listening", material: "Call Recording" },
-                { time: "10:00–10:15", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:15–12:45", duration: "2.5 hrs", name: "Sales Discovery Module", delivery: "Instructor-led module", material: "Discovery Module" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:45–3:45", duration: "2 hrs", name: "Discovery Full-Call AI Simulation", delivery: "AI simulation", material: "Simulation" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–5:00", duration: "1 hr", name: "Full-Call AI Practice", delivery: "AI simulation", material: "Simulation" }
+            "5": { title: "Sales Discovery + AI", activities: [
+                { time: "8:00–9:00", duration: "1 hr", name: "Trial & OTC Quiz", delivery: "Assessment" },
+                { time: "9:00–10:00", duration: "1 hr", name: "Call Listening", delivery: "Facilitated" },
+                { time: "10:15–12:45", duration: "2.5 hrs", name: "Sales Discovery", delivery: "Instructor-led" },
+                { time: "1:45–3:45", duration: "2 hrs", name: "Discovery Simulation", delivery: "AI simulation" }
             ]},
-            "6": { title: "Core Sales Skills + AI Application", sync: "Synchronous", activities: [
-                { time: "8:00–9:30", duration: "1.5 hrs", name: "Hook, Engage & Close Module", delivery: "Instructor-led module", material: "Module" },
-                { time: "9:30–10:30", duration: "1 hr", name: "Features as Benefits - Part 1", delivery: "Instructor-led module", material: "Module" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–11:45", duration: "1 hr", name: "Features as Benefits - Part 2", delivery: "Instructor-led module", material: "Module" },
-                { time: "11:45–12:45", duration: "1 hr", name: "Objection Handling - Part 1", delivery: "Instructor-led module", material: "Module" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:45–2:45", duration: "1 hr", name: "Objection Handling - Part 2", delivery: "Instructor-led module", material: "Module" },
-                { time: "2:45–3:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "3:00–5:00", duration: "2 hrs", name: "Sales Skills AI Simulation", delivery: "AI simulation", material: "Simulation" }
+            "6": { title: "Core Sales Skills + AI", activities: [
+                { time: "8:00–9:30", duration: "1.5 hrs", name: "Hook, Engage & Close", delivery: "Instructor-led" },
+                { time: "9:30–10:30", duration: "1 hr", name: "Features as Benefits 1", delivery: "Instructor-led" },
+                { time: "10:45–11:45", duration: "1 hr", name: "Features as Benefits 2", delivery: "Instructor-led" },
+                { time: "11:45–12:45", duration: "1 hr", name: "Objection Handling 1", delivery: "Instructor-led" },
+                { time: "3:00–5:00", duration: "2 hrs", name: "Skills AI Simulation", delivery: "AI simulation" }
             ]},
-            "7": { title: "AI Simulation Intensive", sync: "Synchronous", activities: [
-                { time: "8:00–10:30", duration: "2.5 hrs", name: "AI Simulation Practice", delivery: "AI simulation", material: "Simulation" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–12:45", duration: "2 hrs", name: "AI Simulation Practice", delivery: "AI simulation", material: "Simulation" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:45–3:45", duration: "2 hrs", name: "AI Simulation Practice", delivery: "AI simulation", material: "Simulation" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–5:00", duration: "1 hr", name: "Performance Review", delivery: "AI simulation", material: "" }
+            "7": { title: "AI Simulation Intensive", activities: [
+                { time: "8:00–10:30", duration: "2.5 hrs", name: "AI Simulation", delivery: "AI simulation" },
+                { time: "10:45–12:45", duration: "2 hrs", name: "AI Simulation", delivery: "AI simulation" },
+                { time: "1:45–3:45", duration: "2 hrs", name: "AI Simulation", delivery: "AI simulation" },
+                { time: "4:00–5:00", duration: "1 hr", name: "Performance Review", delivery: "AI simulation" }
             ]},
-            "8": { title: "Mock Call Certification", sync: "Synchronous", activities: [
-                { time: "8:00–10:30", duration: "2.5 hrs", name: "Mock Call Certification", delivery: "Certification", material: "Cert" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–12:45", duration: "2 hrs", name: "Mock Call Certification", delivery: "Certification", material: "Cert" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:45–3:45", duration: "2 hrs", name: "Coaching / Remediation", delivery: "Trainer coaching", material: "" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–5:00", duration: "1 hr", name: "Live Launch Prep", delivery: "Trainer-led", material: "" }
+            "8": { title: "Mock Call Certification", activities: [
+                { time: "8:00–10:30", duration: "2.5 hrs", name: "Mock Call Cert", delivery: "Certification" },
+                { time: "10:45–12:45", duration: "2 hrs", name: "Mock Call Cert", delivery: "Certification" },
+                { time: "1:45–3:45", duration: "2 hrs", name: "Coaching", delivery: "Trainer coaching" },
+                { time: "4:00–5:00", duration: "1 hr", name: "Live Launch Prep", delivery: "Trainer-led" }
             ]},
-            "9": { title: "Systems, Tools & Live-Call Readiness", sync: "ASYNCHRONOUS + Synchronous", activities: [
-                { time: "8:00–8:30", duration: "30 min", name: "Morning Stand-up + Day 10 Expectations", delivery: "Trainer-led", material: "" },
-                { time: "8:30–10:30", duration: "2 hrs", name: "QA Talk", delivery: "QA-led", material: "QA Notes" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–12:15", duration: "1.5 hrs", name: "HubSpot / Aircall Setup - Part 1", delivery: "Trainer-guided setup", material: "Setup Guide" },
-                { time: "12:15–1:15", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:15–2:45", duration: "1.5 hrs", name: "HubSpot / Aircall Setup - Part 2", delivery: "Trainer-guided setup", material: "Setup Guide" },
-                { time: "2:45–3:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "3:00–4:00", duration: "1 hr", name: "Lead Assignment & Management", delivery: "Trainer-led", material: "Lead Guide" },
-                { time: "4:00–5:00", duration: "1 hr", name: "Disposition Guide", delivery: "Demo / walkthrough", material: "Disposition Guide" },
-                { asyncMaterials: true, name: "📚 ASYNC MATERIALS - Complete Before Day 10", materials: [
-                    { title: "Pay Structure", link: "" },
-                    { title: "PV (Protocol Violation)", link: "" },
-                    { title: "ZTP (Zero Tolerance Policy)", link: "" },
-                    { title: "Nesting Expectations", link: "" },
-                    { title: "Nesting House Rules", link: "" }
-                ]}
+            "9": { title: "Systems, Tools & Live-Call", activities: [
+                { time: "8:00–8:30", duration: "30 min", name: "Morning Stand-up", delivery: "Trainer-led" },
+                { time: "8:30–10:30", duration: "2 hrs", name: "QA Talk", delivery: "QA-led" },
+                { time: "10:45–12:15", duration: "1.5 hrs", name: "HubSpot Setup 1", delivery: "Trainer-guided" },
+                { time: "1:15–2:45", duration: "1.5 hrs", name: "HubSpot Setup 2", delivery: "Trainer-guided" },
+                { time: "3:00–4:00", duration: "1 hr", name: "Lead Management", delivery: "Trainer-led" }
             ]},
-            "10": { title: "Live Call Launch", sync: "Synchronous", activities: [
-                { validation: true, name: "📋 FORM VALIDATION & ASYNC CHECK (30 mins)", purpose: "Verify all forms completed and async materials reviewed" },
-                { time: "8:00–8:30", duration: "30 min", name: "Morning Stand-up + Tools / Lead Preparation", delivery: "Trainer-led", material: "" },
-                { time: "8:30–10:30", duration: "2 hrs", name: "🔴 LIVE CALLS", delivery: "Live production calls", material: "" },
-                { time: "10:30–10:45", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "10:45–12:45", duration: "2 hrs", name: "🔴 LIVE CALLS", delivery: "Live production calls", material: "" },
-                { time: "12:45–1:45", duration: "1 hr", name: "Lunch", delivery: "—", material: "" },
-                { time: "1:45–3:45", duration: "2 hrs", name: "🔴 LIVE CALLS", delivery: "Live production calls", material: "" },
-                { time: "3:45–4:00", duration: "15 min", name: "Paid Break", delivery: "—", material: "" },
-                { time: "4:00–4:30", duration: "30 min", name: "🔴 LIVE CALLS", delivery: "Live production calls", material: "" },
-                { time: "4:30–5:00", duration: "30 min", name: "EOD Call Debrief / Coaching", delivery: "Trainer-led", material: "" }
+            "10": { title: "Live Call Launch", activities: [
+                { time: "8:00–8:30", duration: "30 min", name: "Morning Stand-up", delivery: "Trainer-led" },
+                { time: "8:30–10:30", duration: "2 hrs", name: "🔴 LIVE CALLS", delivery: "Production calls" },
+                { time: "10:45–12:45", duration: "2 hrs", name: "🔴 LIVE CALLS", delivery: "Production calls" },
+                { time: "1:45–3:45", duration: "2 hrs", name: "🔴 LIVE CALLS", delivery: "Production calls" },
+                { time: "4:00–4:30", duration: "30 min", name: "🔴 LIVE CALLS", delivery: "Production calls" }
             ]}
         };
-        
+
         let currentUser = null;
         let currentActivityIndex = 0;
         let currentDay = null;
@@ -295,7 +222,6 @@
             document.getElementById('homeScreen').classList.add('active');
             document.getElementById('displayName').textContent = name;
             loadDayTiles();
-            loadForms();
         }
 
         function loadDayTiles() {
@@ -317,23 +243,12 @@
 
         function displayCurrentActivity() {
             const dayData = curriculum[currentDay];
-            const activities = dayData.activities.filter(a => !a.asyncMaterials && !a.validation);
+            const activities = dayData.activities;
+            const activity = activities[currentActivityIndex];
             
             document.getElementById('dayTitle').textContent = `Day ${currentDay} - ${dayData.title}`;
             
-            if (currentDay === "9") {
-                displayDay9();
-                return;
-            }
-            
-            if (currentDay === "10") {
-                displayDay10();
-                return;
-            }
-            
-            const activity = activities[currentActivityIndex];
             const progress = ((currentActivityIndex + 1) / activities.length) * 100;
-            
             document.getElementById('progressSection').innerHTML = `
                 <div class="progress-indicator">
                     <div class="progress-bar"><div class="progress-fill" style="width: ${progress}%"></div></div>
@@ -341,18 +256,15 @@
                 </div>
             `;
             
-            const materialHtml = activity.material ? `<div class="material-link">📊 ${activity.material}</div>` : '';
-            
             document.getElementById('activityContent').innerHTML = `
-                <div class="activity-card ${activity.delivery === '—' ? 'break' : ''}">
+                <div class="activity-card">
                     <div class="activity-header">
                         <div class="activity-title">${activity.name}</div>
                         <div class="activity-time">${activity.time}</div>
                     </div>
                     <div class="badges">
-                        <span class="badge">${activity.delivery === '—' ? '☕ Break' : activity.delivery}</span>
+                        <span class="badge">${activity.delivery}</span>
                     </div>
-                    ${materialHtml}
                     <div class="activity-actions">
                         <button class="action-btn primary" onclick="completeActivity()">✓ Done</button>
                     </div>
@@ -360,65 +272,9 @@
             `;
         }
 
-        function displayDay9() {
-            const dayData = curriculum["9"];
-            const asyncMaterials = dayData.activities.find(a => a.asyncMaterials).materials;
-            
-            let html = `
-                <div class="async-materials">
-                    <h4>📚 ASYNC MATERIALS - Complete on Your Own Time</h4>
-                    <p style="font-size: 12px; margin-bottom: 12px; color: #666;">These materials must be reviewed before Day 10</p>
-                    ${asyncMaterials.map((mat, idx) => `
-                        <div class="async-item">
-                            <input type="checkbox" id="async_${idx}"> <label for="async_${idx}" style="cursor: pointer;">${mat.title}</label>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            
-            document.getElementById('activityContent').innerHTML = html;
-        }
-
-        function displayDay10() {
-            const html = `
-                <div class="day10-approval">
-                    <h3>✅ FORM VALIDATION & ASYNC MATERIALS CHECK (First 30 mins)</h3>
-                    <p style="margin-bottom: 15px; font-size: 13px;">Verify trainees have completed all requirements:</p>
-                    <ul class="approval-checklist">
-                        <li><input type="checkbox"> All forms completed</li>
-                        <li><input type="checkbox"> Pay Structure reviewed</li>
-                        <li><input type="checkbox"> PV (Protocol Violation) reviewed</li>
-                        <li><input type="checkbox"> ZTP (Zero Tolerance Policy) reviewed</li>
-                        <li><input type="checkbox"> Nesting Expectations reviewed</li>
-                        <li><input type="checkbox"> Nesting House Rules reviewed</li>
-                    </ul>
-                    <button class="btn" style="margin-top: 20px;" onclick="approveDay10()">✓ All Requirements Met - Ready to Dial!</button>
-                </div>
-            `;
-            document.getElementById('activityContent').innerHTML = html;
-        }
-
-        function approveDay10() {
-            document.getElementById('activityContent').innerHTML = `
-                <div class="congratulations">
-                    <div style="font-size: 80px; margin-bottom: 20px; animation: bounce 1s infinite;">🚀</div>
-                    <h2>GOODLUCK!</h2>
-                    <h2 style="font-size: 36px; margin-bottom: 30px;">CLOSE A LOT OF SALES!</h2>
-                    <p style="font-size: 18px;">Time to make those calls!</p>
-                    <button class="btn cta-btn" style="margin-top: 30px;" onclick="startLiveCalls()">→ Start Live Calls</button>
-                </div>
-            `;
-        }
-
-        function startLiveCalls() {
-            showCongratulations();
-        }
-
         function completeActivity() {
             const dayData = curriculum[currentDay];
-            const activities = dayData.activities.filter(a => !a.asyncMaterials && !a.validation);
-            
-            if (currentActivityIndex < activities.length - 1) {
+            if (currentActivityIndex < dayData.activities.length - 1) {
                 currentActivityIndex++;
                 displayCurrentActivity();
             } else {
@@ -427,31 +283,14 @@
         }
 
         function showCongratulations() {
-            const nextDay = parseInt(currentDay) + 1;
             document.getElementById('activityContent').innerHTML = `
                 <div class="congratulations">
-                    <div style="font-size: 80px; margin-bottom: 20px; animation: bounce 1s infinite;">🎉</div>
+                    <div style="font-size: 80px; margin-bottom: 20px; " class="bounce">🎉</div>
                     <h2>Congratulations!</h2>
                     <p>You've completed all activities for Day ${currentDay}</p>
-                    ${curriculum[nextDay.toString()] ? `<button class="btn cta-btn" onclick="backToHome()">→ Next Day Tomorrow</button>` : ''}
+                    <button class="btn" style="max-width: 300px; margin: 30px auto 0;" onclick="backToHome()">→ Back to Home</button>
                 </div>
             `;
-        }
-
-        function loadForms() {
-            const forms = [
-                { name: "Onboarding Form", dueDay: 1, link: "" },
-                { name: "Skills Assessment", dueDay: 3, link: "" },
-                { name: "Day 9 Compliance Forms", dueDay: 9, link: "" }
-            ];
-            let html = forms.map(f => `
-                <div class="form-card">
-                    <h4>${f.name}</h4>
-                    <p>Due: Day ${f.dueDay}</p>
-                    <a href="${f.link || '#'}" target="_blank">Fill Form →</a>
-                </div>
-            `).join('');
-            document.getElementById('formsList').innerHTML = html;
         }
 
         function switchTab(tab) {
@@ -461,79 +300,32 @@
             document.getElementById(tab + '-tab').classList.add('active');
         }
 
-        function backToHome() {
-            document.getElementById('activityScreen').classList.remove('active');
-            document.getElementById('homeScreen').classList.add('active');
-            currentDay = null;
-            currentActivityIndex = 0;
-        }
-
         function switchToAdmin() {
             const password = prompt('Enter admin password:');
-            if (!password) return;
-            
-            const adminPassword = localStorage.getItem('adminPassword') || 'admin123';
-            if (password !== adminPassword) {
+            if (password === 'admin123') {
+                document.getElementById('homeScreen').classList.remove('active');
+                document.getElementById('adminScreen').classList.add('active');
+            } else {
                 alert('Incorrect password');
-                return;
             }
-            
-            document.getElementById('homeScreen').classList.remove('active');
-            document.getElementById('adminScreen').style.display = 'block';
-            loadAdminStats();
-            loadMaterialLinksForm();
         }
-        
-        function loadAdminStats() {
-            document.getElementById('adminStats').innerHTML = `
-                <div style="background: #f0f4ff; padding: 20px; border-radius: 8px; text-align: center;">
-                    <h3 style="color: #667eea; margin-bottom: 15px;">📊 Dashboard Stats</h3>
-                    <p style="color: #666; font-size: 14px;">Activity tracking coming soon...</p>
-                </div>
-            `;
+
+        function backToHome() {
+            currentDay = null;
+            currentActivityIndex = 0;
+            document.getElementById('activityScreen').classList.remove('active');
+            document.getElementById('adminScreen').classList.remove('active');
+            document.getElementById('homeScreen').classList.add('active');
         }
-        
-        function loadMaterialLinksForm() {
-            let html = '';
-            for (let day = 1; day <= 10; day++) {
-                const dayData = curriculum[day.toString()];
-                html += `<h4 style="margin-top: 15px; margin-bottom: 10px;">Day ${day} - ${dayData.title}</h4>`;
-                dayData.activities.forEach((act, idx) => {
-                    if (act.material && act.material.trim()) {
-                        html += `
-                            <div class="form-group" style="margin-bottom: 10px;">
-                                <label>${act.time} - ${act.name}</label>
-                                <input type="text" id="link_${day}_${idx}" placeholder="Paste material link here">
-                            </div>
-                        `;
-                    }
-                });
+
+        function logout() {
+            if (confirm('Logout?')) {
+                currentUser = null;
+                document.getElementById('loginScreen').style.display = 'block';
+                document.getElementById('homeScreen').classList.remove('active');
+                document.getElementById('trainerName').value = '';
             }
-            document.getElementById('materialLinksForm').innerHTML = html;
         }
-        
-        function switchAdminTab(tab) {
-            document.querySelectorAll('#adminScreen .nav-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('#adminScreen .tab-content').forEach(c => c.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById(tab + '-tab').classList.add('active');
-        }
-        
-        function saveAdminPassword() {
-            const newPassword = document.getElementById('newAdminPassword').value;
-            if (!newPassword) {
-                alert('Please enter a password');
-                return;
-            }
-            localStorage.setItem('adminPassword', newPassword);
-            alert('✓ Password saved!');
-            document.getElementById('newAdminPassword').value = '';
-        }
-        
-        function saveMaterialLinks() {
-            alert('✓ Links would be saved here (Firebase integration needed)');
-        }
-        
     </script>
 </body>
 </html>
