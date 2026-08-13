@@ -3,492 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trainer Curriculum - Progressive Reveal</title>
+    <title>Trainer Portal</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            max-width: 900px;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-        
-        .header p {
-            opacity: 0.9;
-            font-size: 14px;
-        }
-        
-        .auth-section {
-            padding: 40px;
-            max-width: 450px;
-            margin: 40px auto;
-            text-align: center;
-        }
-        
-        .auth-section h2 {
-            margin-bottom: 30px;
-            color: #333;
-            font-size: 24px;
-        }
-        
-        .role-buttons {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .role-btn {
-            flex: 1;
-            padding: 12px 20px;
-            border: 2px solid #ddd;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .role-btn.active {
-            border-color: #667eea;
-            background: #667eea;
-            color: white;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-            font-size: 14px;
-        }
-        
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .trainer-portal {
-            display: none;
-        }
-        
-        .trainer-portal.active {
-            display: block;
-        }
-        
-        .portal-header {
-            padding: 20px 30px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .portal-header h2 {
-            font-size: 20px;
-            color: #333;
-        }
-        
-        .logout-btn {
-            padding: 8px 16px;
-            background: #f0f0f0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-        }
-        
-        .logout-btn:hover {
-            background: #e0e0e0;
-        }
-        
-        .trainer-info {
-            background: #f9f9f9;
-            padding: 15px 30px;
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            font-size: 13px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .info-item {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .info-item label {
-            color: #999;
-            font-weight: 500;
-        }
-        
-        .info-item span {
-            color: #333;
-            font-weight: 600;
-        }
-        
-        .portal-content {
-            padding: 30px;
-        }
-        
-        .activity-card {
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 20px;
-        }
-        
-        .activity-card.completed {
-            border-color: #10b981;
-            background: #f0fdf4;
-        }
-        
-        .activity-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 15px;
-        }
-        
-        .activity-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-        }
-        
-        .activity-time {
-            font-size: 13px;
-            color: #667eea;
-            font-weight: 600;
-        }
-        
-        .badges {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .badge-sync {
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-        
-        .badge-async {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        
-        .badge-delivery {
-            background: #f3e8ff;
-            color: #6b21a8;
-        }
-        
-        .activity-details {
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .detail-row {
-            margin-bottom: 10px;
-        }
-        
-        .detail-row:last-child {
-            margin-bottom: 0;
-        }
-        
-        .detail-label {
-            color: #667eea;
-            font-weight: 600;
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-        
-        .detail-value {
-            color: #333;
-            margin-top: 4px;
-        }
-        
-        .activity-actions {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        
-        .action-btn {
-            flex: 1;
-            min-width: 140px;
-            padding: 12px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
-        
-        .action-btn.primary {
-            background: #10b981;
-            color: white;
-        }
-        
-        .action-btn.primary:hover {
-            background: #059669;
-        }
-        
-        .action-btn.primary:disabled {
-            background: #6b7280;
-            cursor: not-allowed;
-        }
-        
-        .action-btn.secondary {
-            background: #f0f0f0;
-            color: #333;
-            border: 1px solid #ddd;
-        }
-        
-        .action-btn.secondary:hover {
-            background: #e0e0e0;
-        }
-        
-        .progress-indicator {
-            text-align: center;
-            padding: 20px;
-            background: #f0f4ff;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .progress-indicator h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #ddd;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            background: #10b981;
-            width: 0%;
-            transition: width 0.3s;
-        }
-        
-        .progress-text {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .day-summary {
-            background: #e0e7ff;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #667eea;
-        }
-        
-        .day-summary h2 {
-            color: #667eea;
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-        
-        .day-summary p {
-            color: #333;
-            font-size: 14px;
-            line-height: 1.5;
-        }
-        
-        .locked-activity {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .locked-icon {
-            display: inline-block;
-            margin-left: 8px;
-            font-size: 14px;
-        }
-        
-        .admin-portal {
-            display: none;
-        }
-        
-        .admin-portal.active {
-            display: block;
-        }
-        
-        .admin-content {
-            padding: 30px;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .stat-card h4 {
-            font-size: 11px;
-            opacity: 0.9;
-            margin-bottom: 10px;
-        }
-        
-        .stat-card .number {
-            font-size: 28px;
-            font-weight: 700;
-        }
-        
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-        
-        .admin-table th {
-            background: #f0f0f0;
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            border-bottom: 2px solid #ddd;
-        }
-        
-        .admin-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .admin-table tr:hover {
-            background: #f9f9f9;
-        }
-        
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 11px;
-        }
-        
-        .status-completed {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        
-        .status-in-progress {
-            background: #fef3c7;
-            color: #92400e;
-        }
-        
-        @media (max-width: 768px) {
-            .activity-header {
-                flex-direction: column;
-            }
-            
-            .badges {
-                margin-top: 10px;
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { background: white; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); max-width: 900px; margin: 0 auto; overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 28px; margin-bottom: 8px; }
+        .auth-section { padding: 40px; max-width: 450px; margin: 40px auto; text-align: center; }
+        .auth-section h2 { margin-bottom: 30px; color: #333; font-size: 24px; }
+        .role-buttons { display: flex; gap: 15px; margin-bottom: 30px; }
+        .role-btn { flex: 1; padding: 12px 20px; border: 2px solid #ddd; background: white; border-radius: 8px; cursor: pointer; font-weight: 500; }
+        .role-btn.active { border-color: #667eea; background: #667eea; color: white; }
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; color: #555; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        .btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .trainer-portal { display: none; }
+        .trainer-portal.active { display: block; }
+        .admin-portal { display: none; }
+        .admin-portal.active { display: block; }
+        .portal-header { padding: 20px 30px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .logout-btn { padding: 8px 16px; background: #f0f0f0; border: 1px solid #ddd; border-radius: 6px; cursor: pointer; }
+        .portal-content { padding: 30px; }
+        .activity-card { background: white; border: 2px solid #667eea; border-radius: 10px; padding: 25px; margin-bottom: 20px; }
+        .activity-header { display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .activity-title { font-size: 18px; font-weight: 600; color: #333; }
+        .badges { display: flex; gap: 8px; margin-bottom: 15px; }
+        .badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #e0f2fe; color: #0369a1; }
+        .activity-details { background: #f9f9f9; padding: 15px; border-radius: 6px; margin-bottom: 15px; }
+        .activity-actions { display: flex; gap: 12px; }
+        .action-btn { flex: 1; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .action-btn.primary { background: #10b981; color: white; }
+        .admin-tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #eee; }
+        .admin-tab { padding: 12px 20px; background: none; border: none; cursor: pointer; font-weight: 600; color: #999; border-bottom: 3px solid transparent; }
+        .admin-tab.active { color: #667eea; border-bottom-color: #667eea; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .settings-form { background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .success { background: #d1fae5; color: #065f46; padding: 12px; border-radius: 6px; margin-bottom: 15px; display: none; }
+        .success.show { display: block; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 Trainer Curriculum</h1>
-            <p>August 2026+ Edition - Progressive Learning</p>
+            <h1>📚 Trainer Portal</h1>
+            <p>Dynamic Curriculum Platform</p>
         </div>
         
-        <!-- Auth Section -->
         <div id="authSection" class="auth-section">
             <h2>Select Your Role</h2>
             <div class="role-buttons">
@@ -505,16 +70,9 @@
                     <label>Select Day</label>
                     <select id="trainerDay">
                         <option value="">Choose a day...</option>
-                        <option value="1">Day 1 - Orientation & Setup</option>
-                        <option value="2">Day 2 - Product Knowledge</option>
-                        <option value="3">Day 3 - Trial/OTC + Call Flow</option>
-                        <option value="4">Day 4 - YES Customer AI + Coaching</option>
-                        <option value="5">Day 5 - Sales Discovery + AI</option>
-                        <option value="6">Day 6 - Core Sales Skills</option>
-                        <option value="7">Day 7 - AI Intensive</option>
-                        <option value="8">🎯 Day 8 - Mock Certification</option>
-                        <option value="9">Day 9 - Systems & Tools</option>
-                        <option value="10">🚀 Day 10 - Live Call Launch</option>
+                        <option value="1">Day 1</option>
+                        <option value="2">Day 2</option>
+                        <option value="3">Day 3</option>
                     </select>
                 </div>
                 <button class="btn" onclick="trainerLogin()">Start Learning</button>
@@ -525,140 +83,92 @@
                     <label>Admin Password</label>
                     <input type="password" id="adminPassword" placeholder="Enter password">
                 </div>
-                <button class="btn" onclick="adminLogin()">Access Dashboard</button>
+                <button class="btn" onclick="adminLogin()">Access Admin</button>
             </div>
         </div>
         
-        <!-- Trainer Portal -->
         <div id="trainerPortal" class="trainer-portal">
             <div class="portal-header">
-                <h2 id="dayTitle">Day 1</h2>
+                <h2>Trainer Portal</h2>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
-            
-            <div class="trainer-info">
-                <div class="info-item">
-                    <label>Trainer:</label>
-                    <span id="displayTrainerName"></span>
-                </div>
-                <div class="info-item">
-                    <label>Login:</label>
-                    <span id="displayLoginTime"></span>
-                </div>
-            </div>
-            
             <div class="portal-content">
-                <div id="daySummary"></div>
-                <div id="progressSection"></div>
-                <div id="currentActivity"></div>
-                <div id="nextActivityPreview"></div>
+                <div id="trainerContent"></div>
             </div>
         </div>
         
-        <!-- Admin Portal -->
         <div id="adminPortal" class="admin-portal">
             <div class="portal-header">
                 <h2>Admin Dashboard</h2>
                 <button class="logout-btn" onclick="logout()">Logout</button>
             </div>
-            
-            <div class="admin-content">
-                <div class="stats-grid" id="statsGrid"></div>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Trainer</th>
-                            <th>Day</th>
-                            <th>Activity</th>
-                            <th>Status</th>
-                            <th>Time</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminTable"></tbody>
-                </table>
+            <div class="portal-content">
+                <div class="admin-tabs">
+                    <button class="admin-tab active" onclick="switchAdminTab('dashboard')">📊 Dashboard</button>
+                    <button class="admin-tab" onclick="switchAdminTab('settings')">⚙️ Settings</button>
+                </div>
+                
+                <div id="dashboard-tab" class="tab-content active">
+                    <div class="stats-grid" id="statsGrid"></div>
+                </div>
+                
+                <div id="settings-tab" class="tab-content">
+                    <div class="success" id="successMsg">✓ Saved to Firebase!</div>
+                    
+                    <div class="settings-form">
+                        <h3>🔐 Change Password</h3>
+                        <div class="form-group">
+                            <input type="password" id="newPassword" placeholder="New password">
+                        </div>
+                        <button class="btn" onclick="savePassword()">Save</button>
+                    </div>
+                    
+                    <div class="settings-form">
+                        <h3>🎨 Edit Canva Links</h3>
+                        <div class="form-group">
+                            <label>Day 1</label>
+                            <input type="text" id="canva1" placeholder="https://www.canva.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Day 2</label>
+                            <input type="text" id="canva2" placeholder="https://www.canva.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Day 3</label>
+                            <input type="text" id="canva3" placeholder="https://www.canva.com/...">
+                        </div>
+                        <button class="btn" onclick="saveCanva()">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Exact curriculum data from Excel
-        const curriculum = {
-            "1": {
-                title: "Orientation, Setup & FC Foundation",
-                objective: "Complete onboarding, establish training expectations, and introduce the Homeaglow / FC foundation.",
-                activities: [
-                    { time: "8:00–9:00", duration: "1 hr", name: "Roll Call / Initial Attendance", type: "Synchronous", delivery: "Trainer-led", purpose: "Attendance, introductions, and initial class readiness." },
-                    { time: "9:00–10:30", duration: "1.5 hrs", name: "Introduction & House Rules", type: "Synchronous", delivery: "Trainer-led", purpose: "Set expectations, communication norms, and training standards." },
-                    { time: "10:30–10:45", duration: "0.25 hr", name: "Paid Break", type: "Break", delivery: "—", purpose: "" },
-                    { time: "10:45–12:45", duration: "2 hrs", name: "Training Timeline + Account Setup: Hubstaff, Slack & Gmail", type: "Synchronous", delivery: "Guided setup", purpose: "Establish access to core communication and productivity tools." },
-                    { time: "12:45–1:45", duration: "1 hr", name: "Lunch", type: "Break", delivery: "—", purpose: "" },
-                    { time: "1:45–3:45", duration: "2 hrs", name: "Account Setup + Onboarding Forms", type: "Synchronous", delivery: "Guided setup / forms", purpose: "Complete onboarding requirements and resolve access issues." },
-                    { time: "3:45–4:00", duration: "0.25 hr", name: "Paid Break", type: "Break", delivery: "—", purpose: "" },
-                    { time: "4:00–5:00", duration: "1 hr", name: "FC 101", type: "Synchronous", delivery: "Instructor-led module", purpose: "Introduce foundational product and program knowledge." }
-                ]
-            },
-            "2": {
-                title: "Product Knowledge & Application",
-                objective: "Build product knowledge and allow trainees to apply the DHJ booking process in staging.",
-                activities: [
-                    { time: "8:00–9:00", duration: "1 hr", name: "Review Activity", type: "Synchronous", delivery: "Trainer-led", purpose: "Reinforce Day 1 learning." },
-                    { time: "9:00–10:00", duration: "1 hr", name: "FC Sales Process Playbook: FCF FC Part 1", type: "Synchronous", delivery: "Instructor-led module", purpose: "Build foundational offer and booking knowledge." },
-                    { time: "10:00–10:15", duration: "0.25 hr", name: "Paid Break", type: "Break", delivery: "—", purpose: "" },
-                    { time: "10:15–12:45", duration: "2.5 hrs", name: "FC Sales Process Playbook: FCF FC Continuation", type: "Synchronous", delivery: "Instructor-led module", purpose: "Continue product and booking-process instruction." },
-                    { time: "12:45–1:45", duration: "1 hr", name: "Lunch", type: "Break", delivery: "—", purpose: "" },
-                    { time: "1:45–2:45", duration: "1 hr", name: "Staging Websites Discussion", type: "Synchronous", delivery: "Demo / walkthrough", purpose: "Prepare trainees to apply the booking flow in the practice environment." },
-                    { time: "2:45–3:45", duration: "1 hr", name: "New CRM Tool Staging Simulation", type: "Synchronous", delivery: "Guided practice", purpose: "Apply the DHJ booking process." },
-                    { time: "3:45–4:00", duration: "0.25 hr", name: "Paid Break", type: "Break", delivery: "—", purpose: "" },
-                    { time: "4:00–5:00", duration: "1 hr", name: "Individual Staging Practice", type: "Synchronous", delivery: "Hands-on practice", purpose: "Build speed, familiarity, and confidence in staging." }
-                ]
-            },
-            "3": {
-                title: "Trial / OTC + Call Flow Foundation",
-                objective: "Introduce the complete customer conversation and booking path before the first readiness assessment.",
-                activities: [
-                    { time: "8:00–8:30", duration: "0.5 hr", name: "Review", type: "Synchronous", delivery: "Trainer-led", purpose: "Reinforce prior-day product and booking concepts." },
-                    { time: "8:30–10:30", duration: "2 hrs", name: "FC Sales Process Playbook: Trial & One-Time", type: "Synchronous", delivery: "Instructor-led module", purpose: "Introduce Trial and One-Time customer handling." },
-                    { time: "10:30–10:45", duration: "0.25 hr", name: "Paid Break", type: "Break", delivery: "—", purpose: "" },
-                    { time: "10:45–12:15", duration: "1.5 hrs", name: "Call Flow Familiarization + FC Sales Training Library", type: "Synchronous", delivery: "Instructor-led / walkthrough", purpose: "Connect product knowledge to the customer conversation." },
-                    { time: "12:15–1:15", duration: "1 hr", name: "Lunch", type: "Break", delivery: "—", purpose: "" },
-                    { time: "1:15–1:45", duration: "0.5 hr", name: "FC 101 Quiz", type: "Synchronous", delivery: "Assessment", purpose: "Check foundational product knowledge." },
-                    { time: "1:45–3:45", duration: "2 hrs", name: "Cleaning Path → Booking Flow → Aftersales Walkthrough", type: "Synchronous", delivery: "Guided walkthrough", purpose: "Understand the end-to-end customer and booking journey." },
-                    { time: "3:45–4:00", duration: "0.25 hr", name: "Paid Break", type: "Break", delivery: "—", purpose: "" },
-                    { time: "4:00–5:00", duration: "1 hr", name: "YES Customer AI Practice", type: "Synchronous", delivery: "AI simulation", purpose: "Begin applying product and call-flow knowledge in a simulated customer interaction." }
-                ]
-            }
-        };
+        const DB_URL = "https://trainer-portal-2ef55-default-rtdb.firebaseio.com";
+        
+        let currentUser = null;
+        let settings = null;
 
-        class StorageManager {
-            constructor() {
-                this.storageKey = 'trainerData';
-            }
-
-            addActivity(trainerName, day, activityIndex, status) {
-                const data = JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-                data.push({
-                    id: Date.now(),
-                    trainerName,
-                    day,
-                    activityIndex,
-                    status,
-                    timestamp: new Date().toISOString()
-                });
-                localStorage.setItem(this.storageKey, JSON.stringify(data));
-            }
-
-            getAllActivities() {
-                return JSON.parse(localStorage.getItem(this.storageKey) || '[]');
-            }
-
-            resetAll() {
-                localStorage.setItem(this.storageKey, JSON.stringify([]));
+        // Load settings from Firebase REST API
+        async function loadSettings() {
+            try {
+                const response = await fetch(DB_URL + "/settings.json");
+                const data = await response.json();
+                settings = data || {
+                    adminPassword: "admin123",
+                    canvaLinks: {
+                        "1": "https://www.canva.com",
+                        "2": "https://www.canva.com",
+                        "3": "https://www.canva.com"
+                    }
+                };
+                console.log("Settings loaded:", settings);
+            } catch (error) {
+                console.error("Error loading settings:", error);
+                settings = { adminPassword: "admin123", canvaLinks: {} };
             }
         }
-
-        const storage = new StorageManager();
-        let currentUser = null;
-        let currentActivityIndex = 0;
 
         function setRole(role) {
             document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
@@ -668,129 +178,66 @@
             document.getElementById('adminAuth').style.display = role === 'admin' ? 'block' : 'none';
         }
 
-        function trainerLogin() {
+        async function trainerLogin() {
             const name = document.getElementById('trainerName').value.trim();
             const day = document.getElementById('trainerDay').value;
 
             if (!name || !day) {
-                alert('Please enter your name and select a day');
+                alert('Please enter name and select day');
                 return;
             }
 
             currentUser = { name, day };
-            currentActivityIndex = 0;
+            
+            // Log to Firebase
+            await fetch(DB_URL + "/sessions.json", {
+                method: "POST",
+                body: JSON.stringify({ trainer: name, day: day, time: new Date().toISOString() })
+            }).catch(e => console.error("Error logging session:", e));
             
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('trainerPortal').classList.add('active');
             
-            displayCurrentActivity();
-        }
-
-        function displayCurrentActivity() {
-            const dayData = curriculum[currentUser.day];
-            const activities = dayData.activities.filter(a => a.type !== 'Break');
-            
-            document.getElementById('dayTitle').textContent = `Day ${currentUser.day} - ${dayData.title}`;
-            document.getElementById('displayTrainerName').textContent = currentUser.name;
-            document.getElementById('displayLoginTime').textContent = new Date().toLocaleTimeString();
-
-            // Day Summary
-            document.getElementById('daySummary').innerHTML = `
-                <div class="day-summary">
-                    <h2>Day ${currentUser.day}: ${dayData.title}</h2>
-                    <p>${dayData.objective}</p>
-                </div>
-            `;
-
-            // Progress
-            const progress = ((currentActivityIndex + 1) / activities.length) * 100;
-            document.getElementById('progressSection').innerHTML = `
-                <div class="progress-indicator">
-                    <h3>Progress</h3>
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${progress}%"></div>
-                    </div>
-                    <div class="progress-text">Activity ${currentActivityIndex + 1} of ${activities.length}</div>
-                </div>
-            `;
-
-            // Current Activity
-            const currentActivity = activities[currentActivityIndex];
-            const typeColor = currentActivity.type === 'Synchronous' ? 'badge-sync' : 'badge-async';
-            const typeEmoji = currentActivity.type === 'Synchronous' ? '🔴' : '📚';
-
-            document.getElementById('currentActivity').innerHTML = `
+            const canvaLink = settings?.canvaLinks?.[day] || 'https://www.canva.com';
+            document.getElementById('trainerContent').innerHTML = `
+                <h2>Day ${day}</h2>
                 <div class="activity-card">
                     <div class="activity-header">
-                        <div class="activity-title">${currentActivity.name}</div>
-                        <div class="activity-time">${currentActivity.time} (${currentActivity.duration})</div>
+                        <div class="activity-title">Day ${day} Activity</div>
                     </div>
-                    
                     <div class="badges">
-                        <span class="badge ${typeColor}">${typeEmoji} ${currentActivity.type}</span>
-                        <span class="badge badge-delivery">📋 ${currentActivity.delivery}</span>
+                        <span class="badge">🔴 Synchronous</span>
                     </div>
-                    
                     <div class="activity-details">
-                        <div class="detail-row">
-                            <div class="detail-label">Purpose</div>
-                            <div class="detail-value">${currentActivity.purpose}</div>
-                        </div>
+                        <strong>Trainer:</strong> ${name}<br>
+                        Learning activities for Day ${day}
                     </div>
-                    
                     <div class="activity-actions">
-                        <a href="https://www.canva.com" target="_blank" class="action-btn secondary">
-                            📊 View Materials
-                        </a>
-                        <button class="action-btn primary" onclick="completeActivity()">
-                            ✓ Finished with this activity
-                        </button>
+                        <a href="${canvaLink}" target="_blank" class="action-btn" style="background: #f0f0f0; color: #333; text-decoration: none; display: flex; align-items: center; justify-content: center;">View Materials</a>
+                        <button class="action-btn primary" onclick="completeDay()">✓ Done</button>
                     </div>
                 </div>
             `;
-
-            // Next Activity Preview
-            if (currentActivityIndex < activities.length - 1) {
-                const nextActivity = activities[currentActivityIndex + 1];
-                document.getElementById('nextActivityPreview').innerHTML = `
-                    <div class="activity-card locked-activity">
-                        <div class="activity-header">
-                            <div>
-                                <div class="activity-title">Next: ${nextActivity.name}</div>
-                                <div class="locked-icon">🔒 Complete current activity to unlock</div>
-                            </div>
-                            <div class="activity-time">${nextActivity.time}</div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                document.getElementById('nextActivityPreview').innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #10b981;">
-                        <div style="font-size: 48px; margin-bottom: 10px;">🎉</div>
-                        <div style="font-size: 18px; font-weight: 600;">Excellent work!</div>
-                        <p style="color: #666; margin-top: 10px;">You've completed all activities for today.</p>
-                    </div>
-                `;
-            }
         }
 
-        function completeActivity() {
-            const dayData = curriculum[currentUser.day];
-            const activities = dayData.activities.filter(a => a.type !== 'Break');
+        async function completeDay() {
+            await fetch(DB_URL + "/completions.json", {
+                method: "POST",
+                body: JSON.stringify({ trainer: currentUser.name, day: currentUser.day, time: new Date().toISOString() })
+            }).catch(e => console.error("Error logging completion:", e));
             
-            storage.addActivity(currentUser.name, currentUser.day, currentActivityIndex, 'completed');
-            
-            if (currentActivityIndex < activities.length - 1) {
-                currentActivityIndex++;
-                displayCurrentActivity();
-            } else {
-                alert('🎉 Congratulations! You have completed all activities for Day ' + currentUser.day);
-            }
+            alert('✓ Day completed! Great work!');
         }
 
-        function adminLogin() {
+        async function adminLogin() {
             const password = document.getElementById('adminPassword').value;
-            if (password !== 'admin123') {
+            
+            if (!settings) {
+                alert('Loading settings... please try again');
+                return;
+            }
+            
+            if (password !== settings.adminPassword) {
                 alert('Incorrect password');
                 return;
             }
@@ -798,52 +245,88 @@
             document.getElementById('authSection').style.display = 'none';
             document.getElementById('adminPortal').classList.add('active');
             
-            updateAdminDashboard();
+            loadDashboard();
+            loadSettingsForm();
         }
 
-        function updateAdminDashboard() {
-            const allActivities = storage.getAllActivities();
-            const completed = allActivities.filter(a => a.status === 'completed').length;
-            const uniqueTrainers = new Set(allActivities.map(a => a.trainerName)).size;
-
-            document.getElementById('statsGrid').innerHTML = `
-                <div class="stat-card">
-                    <h4>Total Completions</h4>
-                    <div class="number">${completed}</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Unique Trainers</h4>
-                    <div class="number">${uniqueTrainers}</div>
-                </div>
-                <div class="stat-card">
-                    <h4>Total Activities</h4>
-                    <div class="number">${allActivities.length}</div>
-                </div>
-            `;
-
-            let tableHTML = '';
-            allActivities.forEach(activity => {
-                const dayData = curriculum[activity.day];
-                const actData = dayData.activities[activity.activityIndex];
+        async function loadDashboard() {
+            try {
+                const response = await fetch(DB_URL + "/completions.json");
+                const data = await response.json() || {};
+                const items = Object.values(data).filter(v => v);
                 
-                tableHTML += `
-                    <tr>
-                        <td>${activity.trainerName}</td>
-                        <td>Day ${activity.day}</td>
-                        <td>${actData?.name || 'N/A'}</td>
-                        <td><span class="status-badge status-completed">✓ Completed</span></td>
-                        <td>${new Date(activity.timestamp).toLocaleTimeString()}</td>
-                    </tr>
+                document.getElementById('statsGrid').innerHTML = `
+                    <div class="stat-card">
+                        <h4>Total Completions</h4>
+                        <div style="font-size: 28px; font-weight: 700;">${items.length}</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Unique Trainers</h4>
+                        <div style="font-size: 28px; font-weight: 700;">${new Set(items.map(i => i.trainer)).size}</div>
+                    </div>
                 `;
-            });
+            } catch (error) {
+                console.error("Error loading dashboard:", error);
+            }
+        }
 
-            document.getElementById('adminTable').innerHTML = tableHTML || '<tr><td colspan="5" style="text-align: center; padding: 20px; color: #999;">No activities yet</td></tr>';
+        function loadSettingsForm() {
+            if (settings?.canvaLinks) {
+                document.getElementById('canva1').value = settings.canvaLinks["1"] || '';
+                document.getElementById('canva2').value = settings.canvaLinks["2"] || '';
+                document.getElementById('canva3').value = settings.canvaLinks["3"] || '';
+            }
+        }
+
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+
+        async function savePassword() {
+            const newPwd = document.getElementById('newPassword').value;
+            if (!newPwd) {
+                alert('Please enter a password');
+                return;
+            }
+            
+            settings.adminPassword = newPwd;
+            await fetch(DB_URL + "/settings.json", {
+                method: "PUT",
+                body: JSON.stringify(settings)
+            }).then(() => {
+                showSuccess();
+                document.getElementById('newPassword').value = '';
+            }).catch(e => alert("Error: " + e));
+        }
+
+        async function saveCanva() {
+            if (!settings.canvaLinks) settings.canvaLinks = {};
+            
+            settings.canvaLinks["1"] = document.getElementById('canva1').value;
+            settings.canvaLinks["2"] = document.getElementById('canva2').value;
+            settings.canvaLinks["3"] = document.getElementById('canva3').value;
+            
+            await fetch(DB_URL + "/settings.json", {
+                method: "PUT",
+                body: JSON.stringify(settings)
+            }).then(() => {
+                showSuccess();
+            }).catch(e => alert("Error: " + e));
+        }
+
+        function showSuccess() {
+            const msg = document.getElementById('successMsg');
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 3000);
         }
 
         function logout() {
             if (confirm('Logout?')) {
                 currentUser = null;
-                currentActivityIndex = 0;
                 document.getElementById('authSection').style.display = 'block';
                 document.getElementById('trainerPortal').classList.remove('active');
                 document.getElementById('adminPortal').classList.remove('active');
@@ -854,10 +337,9 @@
             }
         }
 
+        // Initialize
         window.addEventListener('load', () => {
-            if (!localStorage.getItem('trainerData')) {
-                localStorage.setItem('trainerData', JSON.stringify([]));
-            }
+            loadSettings();
         });
     </script>
 </body>
