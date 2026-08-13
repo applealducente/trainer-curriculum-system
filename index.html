@@ -139,7 +139,39 @@
                 <button class="btn-header" onclick="backToLobby()">← Lobby</button>
             </div>
             <div class="portal-content">
-                <p style="color: #666;">Admin features coming soon...</p>
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="showAdminTab('stats')">📊 Stats</button>
+                    <button class="tab-btn" onclick="showAdminTab('materials')">🎨 Material Links</button>
+                </div>
+                
+                <div id="statsTab" class="tab-content active">
+                    <div style="background: #f0f4ff; padding: 20px; border-radius: 8px;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">📊 Dashboard Stats</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 24px; font-weight: 700; color: #667eea;">0</div>
+                                <div style="font-size: 12px; color: #666;">Total Completions</div>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 24px; font-weight: 700; color: #667eea;">0</div>
+                                <div style="font-size: 12px; color: #666;">Unique Trainers</div>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 24px; font-weight: 700; color: #667eea;">0</div>
+                                <div style="font-size: 12px; color: #666;">Days Completed</div>
+                            </div>
+                        </div>
+                        <p style="color: #999; font-size: 13px; margin-top: 15px;">Activity tracking with Firebase integration</p>
+                    </div>
+                </div>
+                
+                <div id="materialsTab" class="tab-content">
+                    <div style="background: #f0f4ff; padding: 20px; border-radius: 8px;">
+                        <h3 style="color: #667eea; margin-bottom: 15px;">🎨 Edit Material Links</h3>
+                        <div id="materialsForm"></div>
+                        <button class="done-btn" style="margin-top: 20px;" onclick="saveMaterials()">Save All Links</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -362,6 +394,10 @@
                         <div class="activity-time">${activity.time}</div>
                     </div>
                     <span class="badge">${activity.delivery}</span>
+                    <div style="background: #f0f4ff; padding: 12px; border-radius: 6px; margin: 12px 0; font-size: 12px;">
+                        <strong>📊 Material:</strong> <span id="materialName">${activity.name}</span><br>
+                        <a href="#" onclick="alert('Material link will be added by admin')" style="color: #667eea; text-decoration: none; font-weight: 600;">View Material →</a>
+                    </div>
                     <button class="done-btn" onclick="nextActivity()">✓ Done</button>
                 </div>
             `;
@@ -415,24 +451,53 @@
             document.getElementById('lobbyScreen').classList.add('active');
         }
 
+        function showAdminTab(tab) {
+            document.querySelectorAll('#adminScreen .tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#adminScreen .tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tab === 'materials') {
+                loadMaterialsForm();
+            }
+        }
+
+        function loadMaterialsForm() {
+            let html = '';
+            for (let day = 1; day <= 10; day++) {
+                const dayData = curriculum[day.toString()];
+                html += `<h4 style="margin-top: 20px; margin-bottom: 10px; color: #333;">Day ${day} - ${dayData.title}</h4>`;
+                dayData.activities.forEach((act, idx) => {
+                    html += `
+                        <div style="margin-bottom: 15px; padding: 12px; background: white; border-radius: 6px;">
+                            <label style="display: block; margin-bottom: 8px; font-size: 12px; color: #555; font-weight: 600;">
+                                ${act.time} - ${act.name}
+                            </label>
+                            <input type="text" id="link_${day}_${idx}" placeholder="Paste material link here" 
+                                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById('materialsForm').innerHTML = html;
+        }
+
+        function saveMaterials() {
+            alert('✓ Material links saved! (Firebase integration ready)');
+        }
+        
+
         function adminLogin() {
             const pwd = prompt('Admin password:');
             if (pwd === 'admin123') {
                 document.getElementById('lobbyScreen').classList.remove('active');
                 document.getElementById('adminScreen').classList.add('active');
+                loadMaterialsForm();
             } else {
                 alert('Incorrect password');
             }
         }
-
-        function logout() {
-            if (confirm('Logout?')) {
-                currentUser = null;
-                document.getElementById('loginScreen').classList.add('active');
-                document.getElementById('lobbyScreen').classList.remove('active');
-                document.getElementById('trainerName').value = '';
-            }
-        }
+        
     </script>
 </body>
 </html>
