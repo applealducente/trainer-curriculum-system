@@ -397,17 +397,18 @@
                     
                     ${hasNextDay ? `
                         <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 8px; margin-bottom: 30px;">
-                            <p style="font-size: 16px; margin-bottom: 10px;">📅 See you tomorrow!</p>
-                            <p style="font-size: 14px; opacity: 0.9;">Day ${nextDay} - ${curriculum[nextDay.toString()].title}</p>
+                            <p style="font-size: 16px; margin-bottom: 10px;">📅 Ready for Day ${nextDay}?</p>
+                            <p style="font-size: 14px; opacity: 0.9;">${curriculum[nextDay.toString()].title}</p>
                         </div>
+                        <button class="btn" onclick="startNextDay(${nextDay})" style="max-width: 300px; margin: 0 auto; margin-bottom: 15px; background: white; color: #10b981; font-weight: 700;">→ Continue to Day ${nextDay}</button>
+                        <button class="btn" onclick="logout()" style="max-width: 300px; margin: 0 auto;">← Back to Home</button>
                     ` : `
                         <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 8px; margin-bottom: 30px;">
                             <p style="font-size: 16px;">🚀 You're ready for live calls!</p>
                             <p style="font-size: 14px; opacity: 0.9;">Training complete. Excellent work!</p>
                         </div>
+                        <button class="btn" onclick="logout()" style="max-width: 300px; margin: 0 auto;">← Back to Home</button>
                     `}
-                    
-                    <button class="btn" onclick="logout()" style="max-width: 300px; margin: 0 auto;">← Back to Home</button>
                 </div>
                 
                 <style>
@@ -417,6 +418,12 @@
                     }
                 </style>
             `;
+        }
+
+        function startNextDay(day) {
+            currentUser.day = day.toString();
+            currentActivityIndex = 0;
+            displayCurrentActivity();
         }
 
         async function adminLogin() {
