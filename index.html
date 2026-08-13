@@ -110,7 +110,10 @@
         <div id="homeScreen" class="home-screen">
             <div class="portal-header">
                 <h2>🏠 Training Dashboard</h2>
-                <button class="logout-top" onclick="logout()">Logout</button>
+                <div style="display: flex; gap: 10px;">
+                    <button class="logout-top" onclick="switchToAdmin()" style="background: rgba(255,193,7,0.2); border-color: #ffc107; color: #ffc107;">🔐 Admin</button>
+                    <button class="logout-top" onclick="logout()">Logout</button>
+                </div>
             </div>
             <div class="portal-content">
                 <div class="trainer-name">
@@ -132,16 +135,30 @@
             </div>
         </div>
         
-        <!-- ACTIVITY -->
-        <div id="activityScreen" class="activity-screen">
+        <!-- ADMIN -->
+        <div id="adminScreen" style="display: none;">
             <div class="portal-header">
-                <h2 id="dayTitle">Day 1</h2>
+                <h2>🔐 Admin Dashboard</h2>
                 <button class="logout-top" onclick="backToHome()">← Home</button>
             </div>
             <div class="portal-content">
-                <button class="back-btn" onclick="backToHome()">← Back to Home</button>
-                <div id="progressSection"></div>
-                <div id="activityContent"></div>
+                <div class="nav-tabs">
+                    <button class="nav-tab active" onclick="switchAdminTab('stats')">📊 Stats</button>
+                    <button class="nav-tab" onclick="switchAdminTab('settings')">⚙️ Settings</button>
+                </div>
+                <div id="stats-tab" class="tab-content active"><div id="adminStats"></div></div>
+                <div id="settings-tab" class="tab-content">
+                    <div class="settings-form">
+                        <h4>🔐 Change Admin Password</h4>
+                        <div class="form-group"><input type="password" id="newAdminPassword" placeholder="New password"></div>
+                        <button class="btn" onclick="saveAdminPassword()">Save</button>
+                    </div>
+                    <div class="settings-form">
+                        <h4>🎨 Material Links</h4>
+                        <div id="materialLinksForm"></div>
+                        <button class="btn" onclick="saveMaterialLinks()">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -451,15 +468,72 @@
             currentActivityIndex = 0;
         }
 
-        function logout() {
-            if (confirm('Logout?')) {
-                currentUser = null;
-                document.getElementById('loginScreen').style.display = 'block';
-                document.getElementById('homeScreen').classList.remove('active');
-                document.getElementById('activityScreen').classList.remove('active');
-                document.getElementById('trainerName').value = '';
+        function switchToAdmin() {
+            const password = prompt('Enter admin password:');
+            if (!password) return;
+            
+            const adminPassword = localStorage.getItem('adminPassword') || 'admin123';
+            if (password !== adminPassword) {
+                alert('Incorrect password');
+                return;
             }
+            
+            document.getElementById('homeScreen').classList.remove('active');
+            document.getElementById('adminScreen').style.display = 'block';
+            loadAdminStats();
+            loadMaterialLinksForm();
         }
+        
+        function loadAdminStats() {
+            document.getElementById('adminStats').innerHTML = `
+                <div style="background: #f0f4ff; padding: 20px; border-radius: 8px; text-align: center;">
+                    <h3 style="color: #667eea; margin-bottom: 15px;">📊 Dashboard Stats</h3>
+                    <p style="color: #666; font-size: 14px;">Activity tracking coming soon...</p>
+                </div>
+            `;
+        }
+        
+        function loadMaterialLinksForm() {
+            let html = '';
+            for (let day = 1; day <= 10; day++) {
+                const dayData = curriculum[day.toString()];
+                html += `<h4 style="margin-top: 15px; margin-bottom: 10px;">Day ${day} - ${dayData.title}</h4>`;
+                dayData.activities.forEach((act, idx) => {
+                    if (act.material && act.material.trim()) {
+                        html += `
+                            <div class="form-group" style="margin-bottom: 10px;">
+                                <label>${act.time} - ${act.name}</label>
+                                <input type="text" id="link_${day}_${idx}" placeholder="Paste material link here">
+                            </div>
+                        `;
+                    }
+                });
+            }
+            document.getElementById('materialLinksForm').innerHTML = html;
+        }
+        
+        function switchAdminTab(tab) {
+            document.querySelectorAll('#adminScreen .nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('#adminScreen .tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+        
+        function saveAdminPassword() {
+            const newPassword = document.getElementById('newAdminPassword').value;
+            if (!newPassword) {
+                alert('Please enter a password');
+                return;
+            }
+            localStorage.setItem('adminPassword', newPassword);
+            alert('✓ Password saved!');
+            document.getElementById('newAdminPassword').value = '';
+        }
+        
+        function saveMaterialLinks() {
+            alert('✓ Links would be saved here (Firebase integration needed)');
+        }
+        
     </script>
 </body>
 </html>
